@@ -16,11 +16,11 @@ class PyramidWorker(Worker):
         super(PyramidWorker, self).__init__(*a, **kw)
         self.environment = environment
 
-    def perform_job(self, job):
+    def perform_job(self, job, queue='default'):
         self.procline('Initializing pyramid for %s from %s' % 
                 (job.func_name, job.origin))
         try:
-            super(PyramidWorker, self).perform_job(job)
+            super(PyramidWorker, self).perform_job(job, queue)
             if HAVE_TRANSACTION:
                 get_transaction.commit()
         except:
